@@ -1,38 +1,85 @@
-.App {
-  text-align: center;
+.card-container {
+  display: flex;
+  justify-content: space-between;
+  flex-wrap: wrap;
 }
 
-.App-logo {
-  height: 40vmin;
-  pointer-events: none;
+.business-details {
+  display: flex;
+  justify-content: center;
+  flex-wrap: wrap;
+  margin-left: 20%;
+  margin-right: 20%;
 }
 
-@media (prefers-reduced-motion: no-preference) {
-  .App-logo {
-    animation: App-logo-spin infinite 20s linear;
-  }
-}
-
-.App-header {
-  background-color: #282c34;
-  min-height: 100vh;
+.add-listing {
   display: flex;
   flex-direction: column;
-  align-items: center;
-  justify-content: center;
-  font-size: calc(10px + 2vmin);
-  color: white;
+  margin-top: 50px;
 }
 
-.App-link {
-  color: #61dafb;
+.card {
+  width: 20vw;
+  margin: 25px;
 }
 
-@keyframes App-logo-spin {
-  from {
-    transform: rotate(0deg);
-  }
-  to {
-    transform: rotate(360deg);
-  }
+a {
+  text-decoration: none;
+  color: inherit;
+}
+
+ul {
+  padding-inline-start: 20px;
+}
+
+.flex-container {
+  display: flex;
+  justify-content: space-around;
+  margin: 50px 0;
+}
+
+.add-car {
+  background: #4caf50 !important;
+  color: white !important;
+}
+
+.icon {
+  font-size: medium !important;
+}
+
+.icon:hover {
+  cursor: pointer;
+}
+
+.text-gray {
+  color: gray;
+}
+
+.text-red {
+  color: red;
+}
+
+.nav-list {
+  list-style: none;
+  display: flex;
+}
+
+.nav-list-item {
+  margin: auto 20px;
+}
+
+.car-container {
+  margin: 50px;
+}
+
+.car-paper {
+  padding: 50px;
+}
+
+.login-form {
+  display: flex;
+  flex-direction: column;
+  margin: 50px auto;
+  width: 50%;
+  gap: 15px;
 }
