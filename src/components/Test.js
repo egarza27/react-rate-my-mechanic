@@ -18,7 +18,7 @@ const Test = () => {
     fetchData();
   }, []);
 
-  console.log(data[1].first_name);
+  console.log(data);
   return <div>test</div>;
 };
 export default Test;

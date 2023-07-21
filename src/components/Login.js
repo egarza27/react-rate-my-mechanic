@@ -2,6 +2,7 @@ import React, { useState } from "react";
 import { Navigate, useNavigate } from "react-router-dom";
 import { TextField, Button, Container } from "@mui/material";
 import cookie from "cookie";
+import Register from "./Register";
 
 const Login = () => {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ const Login = () => {
     e.preventDefault();
     let cookies = {};
     document.cookie = cookie.serialize("loggedIn", "true", {
-      maxAge: 60 * 1,
+      maxAge: 60 * 3,
     });
     navigate("/");
   };
@@ -61,7 +62,15 @@ const Login = () => {
           >
             Login
           </Button>
+
+          {/* <Button
+            id="register-button"
+            onClick={() => navigate("/register")}
+            variant="contained"
+            color="primary"
+          ></Button> */}
         </form>
+        <Register navigate={navigate} />
       </Container>
     </div>
   );
