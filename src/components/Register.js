@@ -1,14 +1,18 @@
 import React, { useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container } from "@mui/material";
 import axios from "axios";
 
-const Register = ({ navigate }) => {
+const Register = () => {
+  const navigate = useNavigate();
   const [state, setState] = useState({
     first_name: "",
     last_name: "",
     username: "",
     password: "",
   });
+
+  console.log(state);
 
   const handleTextChange = (e) => {
     const { name, value } = e.target;
@@ -30,7 +34,7 @@ const Register = ({ navigate }) => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4001/users",
+        "http://localhost:4001/auth/signup",
         userData,
         {
           headers: {
@@ -41,7 +45,7 @@ const Register = ({ navigate }) => {
 
       if (response.status === 200) {
         alert("You have successfully registered!");
-        navigate("/");
+        navigate("/login");
       } else {
         alert("Registration failed. Please try again.");
       }
@@ -96,7 +100,10 @@ const Register = ({ navigate }) => {
             type="submit"
             className="register-button"
             variant="contained"
-            color="primary"
+            style={{
+              fontFamily: "Zilla Slab",
+              backgroundColor: "black",
+            }}
           >
             Register
           </Button>

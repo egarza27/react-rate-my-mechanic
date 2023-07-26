@@ -22,7 +22,7 @@ const MaintenanceSchedules = () => {
 
     fetchCarDetails();
   }, []);
-
+  console.log(vins);
   useEffect(() => {
     const fetchSchedules = async () => {
       try {
@@ -51,7 +51,7 @@ const MaintenanceSchedules = () => {
   }, [vins]);
 
   return (
-    <div>
+    <div className="maintenance-schedules">
       <h2>Maintenance Schedules</h2>
       {schedules.length === 0 ? (
         <p>Loading schedules...</p>

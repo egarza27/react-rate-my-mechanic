@@ -74,7 +74,14 @@ const CarForm = (props) => {
             variant="standard"
           ></TextField>
           <br></br>
-          <Button variant="contained" type="submit">
+          <Button
+            variant="contained"
+            type="submit"
+            style={{
+              fontFamily: "Zilla Slab",
+              backgroundColor: "black",
+            }}
+          >
             Save
           </Button>
         </div>

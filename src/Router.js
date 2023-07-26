@@ -3,7 +3,7 @@ import { Route, Routes } from "react-router-dom";
 import CarForm from "./containers/CarForm";
 import Home from "./components/Home";
 import Login from "./components/Login";
-import Test from "./components/Test";
+import Test2 from "./components/Test";
 import Register from "./components/Register";
 import MaintenanceSchedules from "./containers/MaintenanceSchedules";
 
@@ -13,7 +13,7 @@ const Router = () => {
       <Route path="/" element={<Home />} />
       <Route path="/login" element={<Login />} />
       <Route path="/carForm" element={<CarForm />} />
-      <Route path="/test" element={<Test />} />
+      <Route path="/test" element={<Test2 />} />
       <Route path="/register" element={<Register />} />
       <Route path="/maintenanceSchedules" element={<MaintenanceSchedules />} />
     </Routes>

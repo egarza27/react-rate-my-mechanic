@@ -8,11 +8,14 @@ const Navigation = () => {
   const isLoggedIn = !!cookie.parse(document.cookie).loggedIn;
 
   return (
-    <AppBar position="relative" sx={{ backgroundColor: "green" }}>
-      <Toolbar>
+    <AppBar position="relative">
+      <Toolbar className="navbar">
         <IconButton color="inherit"></IconButton>
-        <Typography variant="h6" style={{ flexGrow: "1" }}>
-          Title
+        <Typography
+          variant="h6"
+          style={{ flexGrow: "1", fontFamily: "Zilla Slab" }}
+        >
+          Vehicle Maintenance Scheduler
         </Typography>
         <ul className="nav-list">
           {isLoggedIn && (

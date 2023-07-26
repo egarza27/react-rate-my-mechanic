@@ -38,42 +38,15 @@ ul {
   margin: 50px 0;
 }
 
-.add-car {
-  background: #4caf50 !important;
-  color: white !important;
-}
-
-.icon {
-  font-size: medium !important;
-}
-
-.icon:hover {
-  cursor: pointer;
-}
-
-.text-gray {
-  color: gray;
-}
-
-.text-red {
-  color: red;
-}
-
 .nav-list {
   list-style: none;
   display: flex;
+  font-family: "Zilla Slab", serif;
 }
 
 .nav-list-item {
   margin: auto 20px;
-}
-
-.car-container {
-  margin: 50px;
-}
-
-.car-paper {
-  padding: 50px;
+  font-family: "Zilla Slab", serif;
 }
 
 .login-form {
@@ -82,4 +55,18 @@ ul {
   margin: 50px auto;
   width: 50%;
   gap: 15px;
+  font-family: "Zilla Slab", serif;
+}
+
+.welcome {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin: 50px auto;
+  gap: 15px;
+  font-family: "Zilla Slab", serif;
+}
+
+.maintenance-schedules {
+  font-family: "Zilla Slab", serif;
 }
