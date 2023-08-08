@@ -1,8 +1,7 @@
-import React, { useState } from "react";
-import { Navigate, useNavigate } from "react-router-dom";
+import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 import { TextField, Button, Container } from "@mui/material";
 import cookie from "cookie";
-import Register from "./Register";
 import axios from "axios";
 
 const Login = () => {
@@ -12,6 +11,14 @@ const Login = () => {
     username: "",
     password: "",
   });
+
+  const [token, setToken] = useState("");
+
+  useEffect(() => {
+    const cookies = cookie.parse(document.cookie);
+    setToken(cookies.token || " ");
+    console.log("User's Token:", token);
+  }, [token]);
 
   const handleTextChange = (e) => {
     const { name, value } = e.target;
@@ -42,7 +49,12 @@ const Login = () => {
       );
 
       if (response.status === 200) {
-        alert("You have successfully registered!");
+        document.cookie = cookie.serialize("loggedIn", "true", {
+          maxAge: 60 * 10,
+        });
+
+        document.cookie = cookie.serialize("token", response.data.token);
+        console.log("User's token:", response.data.token);
         navigate("/home");
       } else {
         alert("Registration failed. Please try again.");
@@ -51,10 +63,7 @@ const Login = () => {
       console.error("Error occurred during registration:", error);
       alert("An error occurred during registration. Please try again later.");
     }
-    let cookies = {};
-    document.cookie = cookie.serialize("loggedIn", "true", {
-      maxAge: 60 * 3,
-    });
+
     navigate("/");
   };
 

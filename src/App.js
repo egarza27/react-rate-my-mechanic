@@ -4,9 +4,7 @@ import { BrowserRouter } from "react-router-dom";
 import store from "./redux/store";
 import Navigation from "./components/Navigation";
 import Router from "./Router";
-import Login from "./components/Login";
 import "./App.css";
-import { Switch } from "@mui/base";
 
 const App = () => {
   return (

@@ -15,7 +15,10 @@ const Router = () => {
       <Route path="/carForm" element={<CarForm />} />
       <Route path="/test" element={<Test2 />} />
       <Route path="/register" element={<Register />} />
-      <Route path="/maintenanceSchedules" element={<MaintenanceSchedules />} />
+      <Route
+        path="/maintenanceSchedules/test"
+        element={<MaintenanceSchedules />}
+      />
     </Routes>
   );
 };
