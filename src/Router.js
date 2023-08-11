@@ -5,6 +5,7 @@ import Home from "./components/Home";
 import Login from "./components/Login";
 import Test2 from "./components/Test";
 import Register from "./components/Register";
+import UserProfile from "./components/UserProfile";
 import MaintenanceSchedules from "./containers/MaintenanceSchedules";
 
 const Router = () => {
@@ -15,6 +16,7 @@ const Router = () => {
       <Route path="/carForm" element={<CarForm />} />
       <Route path="/test" element={<Test2 />} />
       <Route path="/register" element={<Register />} />
+      <Route path="/userProfile" element={<UserProfile />} />
       <Route
         path="/maintenanceSchedules/test"
         element={<MaintenanceSchedules />}
