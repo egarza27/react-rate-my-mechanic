@@ -3,11 +3,15 @@ import axios from "axios";
 import cookie from "cookie";
 import jwt_decode from "jwt-decode";
 import { DataGrid } from "@mui/x-data-grid";
+import "../MaintenanceSchedules.css";
 
-const MaintenanceSchedules = () => {
+const MaintenanceSchedules = ({ vin }) => {
   const [schedules, setSchedules] = useState([]);
   const [loggedInUserId, setLoggedInUserId] = useState("");
   const [vins, setVins] = useState([]);
+  const [vinTitle, setVinTitle] = useState("");
+
+  const tableTitle = `Maintenance Schedule for ${vin}`;
 
   const userIdFromToken = () => {
     const cookies = cookie.parse(document.cookie);
@@ -30,9 +34,9 @@ const MaintenanceSchedules = () => {
         const userId = userIdFromToken();
         setLoggedInUserId(userId);
 
-        const cookies = cookie.parse(document.cookie); // Define cookies here
+        const cookies = cookie.parse(document.cookie);
         const response = await axios.get(
-          `http://localhost:4001/vehicles/test`,
+          `http://localhost:4001/vehicles/userId`,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
@@ -51,6 +55,9 @@ const MaintenanceSchedules = () => {
 
         setVins(vinAndMileage);
         console.log("vehicles:", vinAndMileage);
+        if (vinAndMileage.length > 0) {
+          setVinTitle(vinAndMileage[0].vin);
+        }
       } catch (error) {
         console.log(error);
       }
@@ -91,18 +98,8 @@ const MaintenanceSchedules = () => {
   }, [loggedInUserId, vins]);
 
   const columns = [
-    { field: "desc", headerName: "Description", width: 250 },
-    { field: "due_mileage", headerName: "Due Mileage", width: 150 },
-    {
-      field: "repair.repair_difficulty",
-      headerName: "Repair Difficulty",
-      width: 180,
-    },
-    {
-      field: "repair.part_cost",
-      headerName: "Part Cost",
-      width: 180,
-    },
+    { field: "desc", headerName: "Description", flex: 1.5 },
+    { field: "due_mileage", headerName: "Due Mileage", flex: 0.8 },
   ];
 
   const rows = schedules
@@ -111,15 +108,17 @@ const MaintenanceSchedules = () => {
         id: `${index}_${innerIndex}`,
         desc: item.desc,
         due_mileage: item.due_mileage,
-        repair_difficulty: item.repair.repair_difficulty,
-        part_cost: item.repair.part_cost,
       }))
     )
     .flat();
 
   return (
-    <div style={{ height: 400, width: "100%" }}>
-      <DataGrid rows={rows} columns={columns} pageSize={5} />
+    <div className="table-container">
+      <h2 className="maintenance-title">
+        Maintenance Schedule for: {vinTitle}
+      </h2>
+      <br></br>
+      <DataGrid rows={rows} columns={columns} autoHeight={true} pageSize={5} />
     </div>
   );
 };

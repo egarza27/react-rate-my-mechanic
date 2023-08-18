@@ -56,9 +56,10 @@ const Register = () => {
   };
 
   return (
-    <div className="App">
-      <Container maxWidth="sm">
+    <div>
+      <Container maxWidth="sm" className="login-container">
         <form className="login-form" onSubmit={register}>
+          <br></br>
           <TextField
             required
             onChange={handleTextChange}
@@ -67,6 +68,7 @@ const Register = () => {
             label="First Name"
             type="text"
             variant="standard"
+            className="login-input"
           />
           <TextField
             required
@@ -76,6 +78,7 @@ const Register = () => {
             label="Last Name"
             type="text"
             variant="standard"
+            className="login-input"
           />
           <TextField
             required
@@ -85,6 +88,7 @@ const Register = () => {
             label="Username"
             type="text"
             variant="standard"
+            className="login-input"
           />
           <TextField
             required
@@ -94,6 +98,7 @@ const Register = () => {
             label="Password"
             type="password"
             variant="standard"
+            className="login-input"
           />
           <br />
           <Button

@@ -8,32 +8,32 @@ const Navigation = () => {
   const isLoggedIn = !!cookie.parse(document.cookie).loggedIn;
 
   return (
-    <AppBar position="relative">
+    <AppBar position="relative" enableColorOnDark>
       <Toolbar className="navbar">
         <IconButton color="inherit"></IconButton>
         <Typography
           variant="h6"
           style={{ flexGrow: "1", fontFamily: "Zilla Slab" }}
         >
-          Vehicle Maintenance Scheduler
+          WheelsUp KeepUp
         </Typography>
-        <ul className="nav-list">
+        <ul className="nav-links">
           {isLoggedIn && (
             <>
-              <li className="nav-list-item">
+              <li className="nav-link">
                 <Link to="/">Home</Link>
               </li>
-              <li className="nav-list-item">
+              <li className="nav-link">
                 <Link to="/carForm">Add</Link>
               </li>
-              <li className="nav-list-item">
+              <li className="nav-link">
                 <Link to="/maintenanceSchedules">Maintenance Schedules</Link>
               </li>
-              <li className="nav-list-item">
+              <li className="nav-link">
                 <Link to="/userProfile">My Profile</Link>
               </li>
               <li
-                className="nav-list-item"
+                className="nav-link"
                 onClick={() => {
                   document.cookie = cookie.serialize("loggedIn", null, {
                     maxAge: 0,
@@ -47,10 +47,10 @@ const Navigation = () => {
           )}
           {!isLoggedIn && (
             <>
-              <li className="nav-list-item">
+              <li className="nav-link">
                 <Link to="/">Home</Link>
               </li>
-              <li className="nav-list-item">
+              <li className="nav-link">
                 <Link to="/login">Login</Link>
               </li>
             </>

@@ -68,13 +68,17 @@ const Login = () => {
   };
 
   return (
-    <div className="App">
-      <div className="welcome">
-        <h1>Welcome to Vehicle Maintenance Scheduler</h1>
-        <p>Login or register to get a personalized maintenance schedule.</p>
+    // className="App"
+    <div className="login-container">
+      <div>
+        {/* <div className="welcome"> */}
+        <h1 className="login-title">Welcome to WheelsUp KeepUp</h1>
+        <p className="login-description">
+          Login or register to get a personalized maintenance schedule.
+        </p>
       </div>
       <Container maxWidth="sm">
-        <form className="login-form" onSubmit={login}>
+        <form onSubmit={login} className="login-form">
           <TextField
             required
             onChange={handleTextChange}
@@ -83,6 +87,7 @@ const Login = () => {
             label="Username"
             type="text"
             variant="standard"
+            className="login-input"
           />
           <TextField
             required
@@ -92,8 +97,10 @@ const Login = () => {
             label="Password"
             type="password"
             variant="standard"
+            className="login-input"
           />
           <br></br>
+
           <Button
             type="submit"
             style={{
@@ -104,7 +111,6 @@ const Login = () => {
           >
             Login
           </Button>
-          <br></br>
 
           <Button
             type="submit"

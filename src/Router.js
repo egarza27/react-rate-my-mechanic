@@ -7,6 +7,7 @@ import Test2 from "./components/Test";
 import Register from "./components/Register";
 import UserProfile from "./components/UserProfile";
 import MaintenanceSchedules from "./containers/MaintenanceSchedules";
+import EditModal from "./components/EditModal";
 
 const Router = () => {
   return (
@@ -17,10 +18,8 @@ const Router = () => {
       <Route path="/test" element={<Test2 />} />
       <Route path="/register" element={<Register />} />
       <Route path="/userProfile" element={<UserProfile />} />
-      <Route
-        path="/maintenanceSchedules/test"
-        element={<MaintenanceSchedules />}
-      />
+      <Route path="/editModal" element={<EditModal />} />
+      <Route path="/maintenanceSchedules" element={<MaintenanceSchedules />} />
     </Routes>
   );
 };

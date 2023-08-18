@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import axios from "axios";
 import cookie from "cookie";
 import jwt_decode from "jwt-decode";
+import "../CarForm.css";
+import SendIcon from "@mui/icons-material/Send";
 
 const CarForm = () => {
   const navigate = useNavigate();
@@ -73,36 +75,43 @@ const CarForm = () => {
 
   return (
     <Container>
-      <form onSubmit={registerVehicle}>
-        <div className="add-listing">
-          <TextField
-            id="vin"
-            placeholder="Vin"
-            value={car.vin}
-            onChange={handleTextChange}
-            variant="standard"
-          ></TextField>
-          <br></br>
-          <TextField
-            id="mileage"
-            placeholder="Mileage"
-            value={car.mileage}
-            onChange={handleTextChange}
-            variant="standard"
-          ></TextField>
-          <br></br>
-          <Button
-            variant="contained"
-            type="submit"
-            style={{
-              fontFamily: "Zilla Slab",
-              backgroundColor: "black",
-            }}
-          >
-            Save
-          </Button>
-        </div>
-      </form>
+      <div className="car-form-container">
+        <p className="login-description">
+          Enter vehicle information below for a personalized maintenance
+          schedule.
+        </p>
+        <form onSubmit={registerVehicle}>
+          <div className="car-form">
+            <TextField
+              label="Vin"
+              id="vin"
+              value={car.vin}
+              onChange={handleTextChange}
+              variant="standard"
+            ></TextField>
+            <br></br>
+            <TextField
+              id="mileage"
+              label="Mileage"
+              value={car.mileage}
+              onChange={handleTextChange}
+              variant="standard"
+            ></TextField>
+            <br></br>
+            <br></br>
+            <Button
+              style={{
+                fontFamily: "Zilla Slab",
+                backgroundColor: "black",
+              }}
+              variant="contained"
+              type="submit"
+            >
+              Save
+            </Button>
+          </div>
+        </form>
+      </div>
     </Container>
   );
 };
