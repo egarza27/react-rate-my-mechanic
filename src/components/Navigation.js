@@ -13,24 +13,32 @@ const Navigation = () => {
         <IconButton color="inherit"></IconButton>
         <Typography
           variant="h6"
-          style={{ flexGrow: "1", fontFamily: "Zilla Slab" }}
+          style={{ flexGrow: "1", fontFamily: "Roboto" }}
         >
           WheelsUp KeepUp
         </Typography>
         <ul className="nav-links">
           {isLoggedIn && (
             <>
-              <li className="nav-link">
-                <Link to="/">Home</Link>
+              <li>
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
               </li>
-              <li className="nav-link">
-                <Link to="/carForm">Add</Link>
+              <li>
+                <Link className="nav-link" to="/carForm">
+                  Add
+                </Link>
               </li>
-              <li className="nav-link">
-                <Link to="/maintenanceSchedules">Maintenance Schedules</Link>
+              <li>
+                <Link className="nav-link" to="/maintenanceSchedules">
+                  Maintenance Schedules
+                </Link>
               </li>
-              <li className="nav-link">
-                <Link to="/userProfile">My Profile</Link>
+              <li>
+                <Link className="nav-link" to="/userProfile">
+                  My Profile
+                </Link>
               </li>
               <li
                 className="nav-link"
@@ -47,11 +55,15 @@ const Navigation = () => {
           )}
           {!isLoggedIn && (
             <>
-              <li className="nav-link">
-                <Link to="/">Home</Link>
+              <li>
+                <Link className="nav-link" to="/">
+                  Home
+                </Link>
               </li>
-              <li className="nav-link">
-                <Link to="/login">Login</Link>
+              <li>
+                <Link className="nav-link" to="/login">
+                  Login
+                </Link>
               </li>
             </>
           )}

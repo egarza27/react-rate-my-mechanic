@@ -68,10 +68,8 @@ const Login = () => {
   };
 
   return (
-    // className="App"
     <div className="login-container">
       <div>
-        {/* <div className="welcome"> */}
         <h1 className="login-title">Welcome to WheelsUp KeepUp</h1>
         <p className="login-description">
           Login or register to get a personalized maintenance schedule.
@@ -103,6 +101,7 @@ const Login = () => {
 
           <Button
             type="submit"
+            className="login-button"
             style={{
               fontFamily: "Zilla Slab",
               backgroundColor: "black",

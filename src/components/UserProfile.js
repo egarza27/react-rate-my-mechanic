@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import axios from "axios";
 import cookie from "cookie";
 import "../UserProfile.css";
+import { Link } from "react-router-dom";
 
 const UserProfile = () => {
   const [userProfile, setUserProfile] = useState({});
@@ -60,6 +61,7 @@ const UserProfile = () => {
   const handleEditUserSave = async () => {
     try {
       const cookies = cookie.parse(document.cookie);
+      console.log("Edited User Data:", editedUser); // Add this console log
       await axios.put(
         `http://localhost:4001/users/updateUserProfile`,
         editedUser,
@@ -76,6 +78,25 @@ const UserProfile = () => {
     }
   };
 
+  const handleDeleteVehicle = async (vinToDelete) => {
+    try {
+      const cookies = cookie.parse(document.cookie);
+      await axios.delete(`http://localhost:4001/vehicles/deleteVehicleByVin`, {
+        headers: {
+          Authorization: `Bearer ${cookies.token}`,
+        },
+        data: {
+          vin: vinToDelete,
+        },
+      });
+      console.log("Vehicle deleted");
+
+      fetchUserProfile();
+    } catch (error) {
+      console.log("Error deleting vehicle:", error);
+    }
+  };
+
   return (
     <div className="user-profile-container">
       <div className="user-profile-card">
@@ -87,9 +108,14 @@ const UserProfile = () => {
               type="text"
               value={userProfile.first_name || ""}
               onChange={(event) => {
+                const newFirstName = event.target.value;
                 setUserProfile((prevProfile) => ({
                   ...prevProfile,
-                  first_name: event.target.value,
+                  first_name: newFirstName,
+                }));
+                setEditedUser((prevEditedUser) => ({
+                  ...prevEditedUser,
+                  first_name: newFirstName,
                 }));
               }}
               className="user-input"
@@ -101,9 +127,14 @@ const UserProfile = () => {
               type="text"
               value={userProfile.last_name || ""}
               onChange={(event) => {
+                const newLastName = event.target.value;
                 setUserProfile((prevProfile) => ({
                   ...prevProfile,
-                  last_name: event.target.value,
+                  last_name: newLastName,
+                }));
+                setEditedUser((prevEditedUser) => ({
+                  ...prevEditedUser,
+                  last_name: newLastName,
                 }));
               }}
               className="user-input"
@@ -116,154 +147,63 @@ const UserProfile = () => {
               value={userProfile.username || ""}
               onChange={(event) => {
                 const newUsername = event.target.value;
+                setUserProfile((prevProfile) => ({
+                  ...prevProfile,
+                  username: newUsername,
+                }));
                 setEditedUser((prevEditedUser) => ({
                   ...prevEditedUser,
                   username: newUsername,
                 }));
               }}
+              className="user-input"
             />
           </p>
         </div>
+        <br></br>
+        <button onClick={handleEditUserSave} className="user-button-save">
+          Save Profile
+        </button>
       </div>
-
-      <button onClick={handleEditUserSave}>Save Profile</button>
 
       <div className="user-vehicles-card">
         <h2 className="user-profile-title">{`${userProfile.first_name}'s Vehicles`}</h2>
         {vins.map((vehicle, index) => (
           <div key={index} className="vehicle-card">
             <p className="vehicle-info">VIN: {vehicle.vin}</p>
-            <p className="vehicle-info">Mileage: {vehicle.mileage}</p>
-            <input
-              type="text"
-              value={vehicle.mileage}
-              onChange={(event) => {
-                const newMileage = event.target.value;
-                handleEditVinSave(vehicle.vin, newMileage);
-              }}
-              className="vehicle-input"
-            />
+            <p className="vehicle-info">Current Mileage: {vehicle.mileage}</p>
+            <p className="update-mileage">
+              Update Mileage:
+              <input
+                type="text"
+                value={vehicle.mileage || ""}
+                onChange={(event) => {
+                  const newMileage = event.target.value;
+                  handleEditVinSave(vehicle.vin, newMileage);
+                }}
+                className="vehicle-input"
+              />
+            </p>
+            <div className="delete-button-container">
+              <button
+                className="delete-button"
+                onClick={() => handleDeleteVehicle(vehicle.vin)}
+              >
+                Delete Vehicle
+              </button>
+            </div>
+            <br></br>
           </div>
         ))}
+      </div>
+      <br></br>
+      <div className="add-vehicle-button-container">
+        <Link to="/carForm" className="add-vehicle-button">
+          Add New Vehicle
+        </Link>
       </div>
     </div>
   );
 };
 
 export default UserProfile;
-
-// import React, { useEffect, useState } from "react";
-// import axios from "axios";
-// import cookie from "cookie";
-// import EditModal from "./EditModal";
-
-// const UserProfile = () => {
-//   const [userProfile, setUserProfile] = useState({});
-//   const [vins, setVins] = useState([]);
-//   const [isEditModalOpen, setEditModalOpen] = useState(false);
-//   const [editedVin, setEditedVin] = useState(null);
-
-//   const fetchUserProfile = async () => {
-//     try {
-//       const cookies = cookie.parse(document.cookie);
-//       const response = await axios.get(
-//         `http://localhost:4001/users/userDataAndVehicles`,
-//         {
-//           headers: {
-//             Authorization: `Bearer ${cookies.token}`,
-//           },
-//         }
-//       );
-
-//       const user = response.data[0];
-//       const vehicles = response.data;
-
-//       const vinAndMileage = vehicles.map((vehicle) => {
-//         return {
-//           vin: vehicle.vin,
-//           mileage: vehicle.mileage,
-//         };
-//       });
-
-//       setUserProfile(user);
-//       setVins(vinAndMileage);
-//     } catch (error) {
-//       console.log(error);
-//     }
-//   };
-
-//   useEffect(() => {
-//     fetchUserProfile();
-//   }, []);
-
-//   const handleEditMileageClick = (vin) => {
-//     setEditModalOpen(true);
-//     // Set the current vehicle's vin in the EditModal component's state
-//     setEditedVin(vin);
-//   };
-
-//   const handleMileageSave = async (vin, newMileage) => {
-//     try {
-//       const cookies = cookie.parse(document.cookie);
-//       const vehicleUpdates = [{ vin, mileage: newMileage }];
-//       await axios.put(
-//         `http://localhost:4001/users/userDataAndVehicles`,
-//         { vehicleUpdates },
-//         {
-//           headers: {
-//             Authorization: `Bearer ${cookies.token}`,
-//           },
-//         }
-//       );
-//       // Close the modal and refresh the user profile after mileage update
-//       setEditModalOpen(false);
-//       fetchUserProfile();
-//     } catch (error) {
-//       console.log("Error updating mileage:", error);
-//       alert("There was an error updating mileage. Please try again.");
-//     }
-//   };
-
-//   const handleEditProfileClick = () => {
-//     setEditModalOpen(true);
-//   };
-
-//   useEffect(() => {
-//     if (isEditModalOpen && Object.keys(userProfile).length > 0) {
-//       // Only open the modal if userProfile is not empty
-//       console.log("Opening EditModal with user data:", userProfile);
-//     }
-//   }, [isEditModalOpen, userProfile]);
-
-//   return (
-//     <div>
-//       <h2>User Profile</h2>
-//       <p>First Name: {userProfile.first_name}</p>
-//       <p>Last Name: {userProfile.last_name}</p>
-//       <p>Username: {userProfile.username}</p>
-
-//       <h2>User's Vehicles</h2>
-//       {vins.map((vehicle, index) => (
-//         <div key={index}>
-//           <p>VIN: {vehicle.vin}</p>
-//           <p>Mileage: {vehicle.mileage}</p>
-//           <button onClick={() => handleEditMileageClick(vehicle.vin)}>
-//             Edit Mileage
-//           </button>
-//         </div>
-//       ))}
-
-//       <button onClick={handleEditProfileClick}>Edit Profile</button>
-
-//       {isEditModalOpen && (
-//         <EditModal
-//           onClose={() => setEditModalOpen(false)}
-//           user={userProfile}
-//           fetchUserProfile={fetchUserProfile}
-//         />
-//       )}
-//     </div>
-//   );
-// };
-
-// export default UserProfile;

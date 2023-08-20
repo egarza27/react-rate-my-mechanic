@@ -5,7 +5,6 @@ import axios from "axios";
 import cookie from "cookie";
 import jwt_decode from "jwt-decode";
 import "../CarForm.css";
-import SendIcon from "@mui/icons-material/Send";
 
 const CarForm = () => {
   const navigate = useNavigate();
@@ -63,7 +62,7 @@ const CarForm = () => {
 
       if (response.status === 200) {
         alert("You have successfully registered!");
-        navigate("/maintenenceSchedules");
+        navigate("/maintenanceSchedules");
       } else {
         alert("Registration failed. Please try again.");
       }
