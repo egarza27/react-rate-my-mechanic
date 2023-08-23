@@ -64,16 +64,23 @@ const MaintenanceSchedules = ({ vin }) => {
   const fetchSchedulesSequentially = async () => {
     try {
       for (const vehicle of vins) {
+        console.log(
+          `Making request for VIN: ${vehicle.vin}, Mileage: ${vehicle.mileage}`
+        );
+
         const response = await axios.get(
-          `http://api.carmd.com/v3.0/maint?vin=${vehicle.vin}&mileage=${vehicle.mileage}`,
-          {
-            headers: {
-              "content-type": "application/json",
-              authorization:
-                "Basic NDE2ZTIwMTYtZGQ3Ny00MGMwLWE2ZmQtZGU1YzUyMjc4MGRj",
-              "partner-token": "7c3444026ac145f49781a785606af288",
-            },
-          }
+          `/api/proxy?vin=${vehicle.vin}&mileage=${vehicle.mileage}`
+          // {
+          //   headers: {
+          //     "content-type": "application/json",
+          //     authorization: `Basic ${process.env.API_KEY}`,
+          //     "partner-token": process.env.PARTNER_TOKEN,
+          //   },
+          // }
+        );
+
+        console.log(
+          `Received response for VIN: ${vehicle.vin}, Mileage: ${vehicle.mileage}`
         );
 
         const scheduleData = response.data;
