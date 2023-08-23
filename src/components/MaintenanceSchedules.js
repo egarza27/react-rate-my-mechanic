@@ -69,9 +69,8 @@ const MaintenanceSchedules = ({ vin }) => {
           {
             headers: {
               "content-type": "application/json",
-              authorization:
-                "Basic NDE2ZTIwMTYtZGQ3Ny00MGMwLWE2ZmQtZGU1YzUyMjc4MGRj",
-              "partner-token": "7c3444026ac145f49781a785606af288",
+              authorization: `Basic ${process.env.API_KEY}`,
+              "partner-token": process.env.PARTNER_TOKEN,
             },
           }
         );
