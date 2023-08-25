@@ -37,16 +37,14 @@ const Login = () => {
       password: state.password,
     };
 
+    const backendUrl = "https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com";
+
     try {
-      const response = await axios.post(
-        "http://localhost:4001/auth/login",
-        userData,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        }
-      );
+      const response = await axios.post(`${backendUrl}/auth/login`, userData, {
+        headers: {
+          "Content-Type": "application/json",
+        },
+      });
 
       if (response.status === 200) {
         document.cookie = cookie.serialize("loggedIn", "true", {
@@ -55,7 +53,32 @@ const Login = () => {
 
         document.cookie = cookie.serialize("token", response.data.token);
         console.log("User's token:", response.data.token);
-        navigate("/home");
+
+        const decodedToken = parseJwt(response.data.token);
+        console.log("Decoded Token:", decodedToken);
+
+        try {
+          const profileResponse = await axios.get(
+            `${backendUrl}/users/userDataAndVehicles`,
+            {
+              headers: {
+                Authorization: `Bearer ${response.data.token}`,
+              },
+            }
+          );
+
+          if (profileResponse.status === 200) {
+            console.log("User's profile data:", profileResponse.data);
+            navigate("/home", {
+              state: { userProfile: profileResponse.data[0] },
+            });
+          } else {
+            alert("Failed to fetch user's profile.");
+          }
+        } catch (error) {
+          console.error("Error fetching user's profile:", error);
+          alert("An error occurred. Please try again later.");
+        }
       } else {
         alert("Registration failed. Please try again.");
       }
@@ -65,6 +88,14 @@ const Login = () => {
     }
 
     navigate("/");
+  };
+
+  const parseJwt = (token) => {
+    try {
+      return JSON.parse(atob(token.split(".")[1]));
+    } catch (e) {
+      return null;
+    }
   };
 
   return (

@@ -9,30 +9,61 @@ const UserProfile = () => {
   const [vins, setVins] = useState([]);
   const [editedUser, setEditedUser] = useState({});
 
+  useEffect(() => {
+    const fetchUserProfile = async () => {
+      try {
+        const cookies = cookie.parse(document.cookie);
+        if (cookies.token) {
+          const response = await axios.get(
+            `https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/users/userDataAndVehicles`,
+            {
+              headers: {
+                Authorization: `Bearer ${cookies.token}`,
+              },
+            }
+          );
+
+          console.log("API call successful:", response.data);
+
+          setUserProfile(response.data[0]);
+          setVins(response.data);
+        } else {
+          setUserProfile([]);
+          setVins([]);
+        }
+      } catch (error) {
+        console.log(error);
+      }
+    };
+
+    fetchUserProfile();
+  }, []);
+
   const fetchUserProfile = async () => {
     try {
       const cookies = cookie.parse(document.cookie);
-      const response = await axios.get(
-        `http://localhost:4001/users/userDataAndVehicles`,
-        {
-          headers: {
-            Authorization: `Bearer ${cookies.token}`,
-          },
-        }
-      );
+      if (cookies.token) {
+        const response = await axios.get(
+          `https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/users/userDataAndVehicles`,
+          {
+            headers: {
+              Authorization: `Bearer ${cookies.token}`,
+            },
+          }
+        );
 
-      console.log("API call successful:", response.data);
+        console.log("API call successful:", response.data);
 
-      setUserProfile(response.data[0]);
-      setVins(response.data);
+        setUserProfile(response.data[0]);
+        setVins(response.data);
+      } else {
+        setUserProfile([]);
+        setVins([]);
+      }
     } catch (error) {
       console.log(error);
     }
   };
-
-  useEffect(() => {
-    fetchUserProfile();
-  }, []);
 
   const handleEditVinSave = async (vin, newMileage) => {
     try {
@@ -40,7 +71,7 @@ const UserProfile = () => {
       console.log("New mileage value:", newMileage);
       const cookies = cookie.parse(document.cookie);
       await axios.put(
-        `http://localhost:4001/vehicles/updateMileage`,
+        `https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/vehicles/updateMileage`,
         {
           mileage: newMileage,
           vin: vin,
@@ -61,9 +92,9 @@ const UserProfile = () => {
   const handleEditUserSave = async () => {
     try {
       const cookies = cookie.parse(document.cookie);
-      console.log("Edited User Data:", editedUser); // Add this console log
+      console.log("Edited User Data:", editedUser);
       await axios.put(
-        `http://localhost:4001/users/updateUserProfile`,
+        `https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/users/updateUserProfile`,
         editedUser,
         {
           headers: {
@@ -81,14 +112,17 @@ const UserProfile = () => {
   const handleDeleteVehicle = async (vinToDelete) => {
     try {
       const cookies = cookie.parse(document.cookie);
-      await axios.delete(`http://localhost:4001/vehicles/deleteVehicleByVin`, {
-        headers: {
-          Authorization: `Bearer ${cookies.token}`,
-        },
-        data: {
-          vin: vinToDelete,
-        },
-      });
+      await axios.delete(
+        `https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/vehicles/deleteVehicleByVin`,
+        {
+          headers: {
+            Authorization: `Bearer ${cookies.token}`,
+          },
+          data: {
+            vin: vinToDelete,
+          },
+        }
+      );
       console.log("Vehicle deleted");
 
       fetchUserProfile();

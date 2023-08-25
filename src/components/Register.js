@@ -34,7 +34,7 @@ const Register = () => {
 
     try {
       const response = await axios.post(
-        "http://localhost:4001/auth/signup",
+        "https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/auth/signup",
         userData,
         {
           headers: {

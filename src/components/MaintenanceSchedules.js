@@ -63,20 +63,18 @@ const MaintenanceSchedules = ({ vin }) => {
 
   const fetchSchedulesSequentially = async () => {
     try {
+      const timeout = 300000;
+
       for (const vehicle of vins) {
         console.log(
           `Making request for VIN: ${vehicle.vin}, Mileage: ${vehicle.mileage}`
         );
 
         const response = await axios.get(
-          `/api/proxy?vin=${vehicle.vin}&mileage=${vehicle.mileage}`
-          // {
-          //   headers: {
-          //     "content-type": "application/json",
-          //     authorization: `Basic ${process.env.API_KEY}`,
-          //     "partner-token": process.env.PARTNER_TOKEN,
-          //   },
-          // }
+          `https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/api/proxy?vin=${vehicle.vin}&mileage=${vehicle.mileage}`,
+          {
+            timeout,
+          }
         );
 
         console.log(
@@ -102,7 +100,7 @@ const MaintenanceSchedules = ({ vin }) => {
 
         const cookies = cookie.parse(document.cookie);
         const response = await axios.get(
-          `http://localhost:4001/vehicles/userId`,
+          `https://wheels-up-keep-up-d0e3ff35790c.herokuapp.com/vehicles/userId`,
           {
             headers: {
               Authorization: `Bearer ${cookies.token}`,
